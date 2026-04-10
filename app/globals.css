@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+:root {
+  /* Backgrounds */
+  --bg-primary: #f7f7f5;
+  --bg-secondary: #efefed;
+  --bg-dark: #111111;
+  --bg-card-light: #ffffff;
+  --bg-card-dark: #1a1a1a;
+
+  /* Text */
+  --text-primary: #111111;
+  --text-secondary: #555555;
+  --text-on-dark: #f0f0f0;
+  --text-muted-dark: #888888;
+
+  /* Accent (lime only on dark backgrounds) */
+  --accent: #c8ff00;
+  --accent-dark: #a8e000;
+
+  /* Borders */
+  --border-light: #e0e0de;
+  --border-dark: #2a2a2a;
+
+  /* Layout */
+  --ok-max: 1280px;
+
+  /* Backward-compatible aliases (so we don't rewrite everything) */
+  --ok-bg: var(--bg-primary);
+  --ok-fg: var(--text-primary);
+  --ok-muted: var(--text-secondary);
+  --ok-border: var(--border-light);
+  --ok-lime: var(--accent);
+  --ok-lime-hover: var(--accent-dark);
+}
+
+@theme inline {
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
+  --color-ok-muted: var(--text-secondary);
+  --color-ok-border: var(--border-light);
+  --color-ok-lime: var(--accent);
+  --color-ok-lime-hover: var(--accent-dark);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-unbounded);
+  --font-mono: var(--font-jbm);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--bg-primary);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3 {
+  font-feature-settings: "kern" 1;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--text-primary) 18%, transparent);
+  color: var(--text-primary);
+}
+
+.container-site,
+.ok-container {
+  width: 100%;
+  max-width: var(--ok-max);
+  margin-inline: auto;
+  padding-left: clamp(16px, 4vw, 80px);
+  padding-right: clamp(16px, 4vw, 80px);
+}
+
+@media (min-width: 768px) {
+.container-site,
+  .ok-container {
+    padding-left: clamp(24px, 4vw, 80px);
+    padding-right: clamp(24px, 4vw, 80px);
+  }
+}
+
+.section-padding {
+  padding-top: clamp(60px, 8vw, 120px);
+  padding-bottom: clamp(60px, 8vw, 120px);
+}
+
+/* Cards */
+.card-light {
+  background: var(--bg-card-light);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  color: var(--text-primary);
+}
+
+.card-dark {
+  background: var(--bg-card-dark);
+  border: 1px solid var(--border-dark);
+  color: var(--text-on-dark);
+}
+
+.on-dark {
+  color: var(--text-on-dark);
+}
+
+.muted-on-dark {
+  color: var(--text-muted-dark);
+}
+
+/* Subtle noise overlay (used in Hero) */
+.ok-noise {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* Visible focus states (accessibility) */
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
+}
+
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+  color: #999999 !important;
+}
+
+input,
+textarea,
+select {
+  color: #111111 !important;
+  background: #ffffff !important;
+  border: 1.5px solid #e0e0de !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #111111 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.08) !important;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Custom cursor must not show on touch devices */
+@media (hover: none) {
+  .custom-cursor {
+    display: none !important;
+  }
+  * {
+    cursor: auto !important;
+  }
+}
